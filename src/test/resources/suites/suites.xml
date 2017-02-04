@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Yandex Mail Box Test Suite" parallel="false">
+    <test name="Test Yandex Mail Box">
+        <classes>
+            <class name="com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest"/>
+        </classes>
+    </test>
+</suite>
