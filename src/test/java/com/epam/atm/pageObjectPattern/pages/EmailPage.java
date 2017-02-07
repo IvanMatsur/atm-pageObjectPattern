@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.epam.atm.pageObjectPattern.sections.folders.FoldersSection;
 import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 
 /**
@@ -123,11 +122,5 @@ public class EmailPage extends Page {
       System.out.println("Email has NOT been sent");
     }
     return result;
-  }
-
-  public FoldersSection folders() {
-    FoldersSection foldersSection = this.foldersSection;
-    System.out.println("Got access to Folder Section");
-    return foldersSection;
   }
 }
