@@ -30,9 +30,9 @@ public class YandexMailBoxTest {
 
   @BeforeClass
   private void doPreparationForTests() {
-    System.setProperty("webdriver.chrome.driver", "C:\\selenium\\chromedriver.exe");
+    System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
     webDriver = new ChromeDriver();
-    webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     webDriver.manage().window().maximize();
   }
 
@@ -74,10 +74,8 @@ public class YandexMailBoxTest {
     emailPage.fillAllEmailFields(MAILTO, MAILSUBJECT, MAILBODY);
     MailBoxPage mailBoxPage = emailPage.folders().openDraftFolder();
     emailPage.clickPopUpSaveButton();
-    mailBoxPage.isFirstEmailInFolderPresent();
-    Assert.assertEquals(
-      mailBoxPage.folders().getEmailsNumberInDraftFolder(),
-      "1",
+    Assert.assertTrue(
+      mailBoxPage.isFirstEmailInFolderPresent(),
       "New email creation and saving as a draft failed");
   }
 
@@ -105,9 +103,7 @@ public class YandexMailBoxTest {
   @Test(description = "Check that email is in Sent folder", groups = "send", dependsOnGroups = "content", dependsOnMethods = "sendDraft")
   public void isMailSent() {
     MailBoxPage mailBoxPage = new MailBoxPage(webDriver).folders().openSentFolder();
-    mailBoxPage.isFirstEmailInFolderPresent();
-    String emailsNumberInSent = mailBoxPage.folders().getEmailsNumberInSentFolder();
-    Assert.assertEquals(emailsNumberInSent, "1", "Sent email is NOT in Sent folder");
+    Assert.assertTrue(mailBoxPage.isFirstEmailInFolderPresent(), "Sent email is NOT in Sent folder");
   }
 
   @Test(description = "Check logout is successful", groups = "logout", dependsOnGroups = "send")
