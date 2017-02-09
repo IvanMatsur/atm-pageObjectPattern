@@ -1,7 +1,5 @@
 package com.epam.atm.pageObjectPattern.sections.folders;
 
-import org.openqa.selenium.WebDriver;
-
 import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
 
 /**
@@ -9,51 +7,48 @@ import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
  */
 public class FoldersSection {
 
-  private WebDriver webDriver;
-
   private Folder inboxFolder;
   private Folder sentFolder;
   private Folder trashFolder;
   private Folder spamFolder;
   private Folder draftFolder;
 
-  public FoldersSection(WebDriver webDriver) {
-    this.webDriver = webDriver;
-    inboxFolder = new Folder(webDriver, Folder.Type.INBOX);
-    sentFolder = new Folder(webDriver, Folder.Type.SENT);
-    trashFolder = new Folder(webDriver, Folder.Type.TRASH);
-    spamFolder = new Folder(webDriver, Folder.Type.SPAM);
-    draftFolder = new Folder(webDriver, Folder.Type.DRAFT);
+  public FoldersSection() {
+    inboxFolder = new Folder(Folder.Type.INBOX);
+    sentFolder = new Folder(Folder.Type.SENT);
+    trashFolder = new Folder(Folder.Type.TRASH);
+    spamFolder = new Folder(Folder.Type.SPAM);
+    draftFolder = new Folder(Folder.Type.DRAFT);
   }
 
   public MailBoxPage openDefaultFolder() {
     openInboxFolder();
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public MailBoxPage openInboxFolder() {
     inboxFolder.open();
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public MailBoxPage openSentFolder() {
     sentFolder.open();
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public MailBoxPage openTrashFolder() {
     trashFolder.open();
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public MailBoxPage openSpamFolder() {
     spamFolder.open();
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public MailBoxPage openDraftFolder() {
     draftFolder.open();
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public String getEmailsNumberInSentFolder() {

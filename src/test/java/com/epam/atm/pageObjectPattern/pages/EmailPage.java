@@ -1,7 +1,5 @@
 package com.epam.atm.pageObjectPattern.pages;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -10,47 +8,47 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 /**
  * Created by Ivan_Matsur on 2/2/2017.
  */
-public class EmailPage extends Page {
+public class EmailPage extends InnerPage {
 
-  private final String NewEmailToFieldXPath = "//div[@name='to']";
-  private final String DraftEmailContactXPath = "//span[@data-contact-email='"+ YandexMailBoxTest.MAILTO +"']";
-  private final String NewEmailSubjectFieldXPath = "//input[@name='subj']";
-  private final String DraftEmailSubjectXPath = "//input[@name='subj' and @value='"+ YandexMailBoxTest.MAILSUBJECT +"']";
-  private final String NewEmailBodyAreaXPath = "//div[@role='textbox']";
-  private final String DraftEmailBodyXPath = "//div[@role='textbox']/div";
-  private final String SaveButtonXPath = "//button[@data-action='save']";
-  private final String SubmitButtonXPath = "//button[contains(@title, '(Ctrl + Enter')]";
-  private final String RedirectLinkXPath = "//a[@class='mail-Done-Redirect-Link' and @href='#inbox']";
+  private final String NEW_EMAIL_TO_FIELD_XPATH = "//div[@name='to']";
+  private final String DRAFT_EMAIL_CONTACT_XPATH = "//span[@data-contact-email='"+ YandexMailBoxTest.MAIL_TO +"']";
+  private final String NEW_EMAIL_SUBJECT_FIELD_XPATH = "//input[@name='subj']";
+  private final String DRAFT_EMAIL_SUBJECT_XPATH = "//input[@name='subj' and @value='"+ YandexMailBoxTest.MAIL_SUBJECT +"']";
+  private final String NEW_EMAIL_BODY_AREA_XPATH = "//div[@role='textbox']";
+  private final String DRAFT_EMAIL_BODY_XPATH = "//div[@role='textbox']/div";
+  private final String SAVE_BUTTON_XPATH = "//button[@data-action='save']";
+  private final String SUBMIT_BUTTON_XPATH = "//button[contains(@title, '(Ctrl + Enter')]";
+  private final String REDIRECT_LINK_XPATH = "//a[@class='mail-Done-Redirect-Link' and @href='#inbox']";
 
-  @FindBy(xpath = NewEmailToFieldXPath)
+  @FindBy(xpath = NEW_EMAIL_TO_FIELD_XPATH)
   private WebElement newEmailToField;
 
-  @FindBy(xpath = DraftEmailContactXPath)
+  @FindBy(xpath = DRAFT_EMAIL_CONTACT_XPATH)
   private WebElement draftEmailContact;
 
-  @FindBy(xpath = NewEmailSubjectFieldXPath)
+  @FindBy(xpath = NEW_EMAIL_SUBJECT_FIELD_XPATH)
   private WebElement newEmailSubjectField;
 
-  @FindBy(xpath = DraftEmailSubjectXPath)
+  @FindBy(xpath = DRAFT_EMAIL_SUBJECT_XPATH)
   private WebElement draftEmailSubject;
 
-  @FindBy(xpath = NewEmailBodyAreaXPath)
+  @FindBy(xpath = NEW_EMAIL_BODY_AREA_XPATH)
   private WebElement newEmailBodyArea;
 
-  @FindBy(xpath = DraftEmailBodyXPath)
+  @FindBy(xpath = DRAFT_EMAIL_BODY_XPATH)
   private WebElement draftEmailBody;
 
-  @FindBy(xpath = SaveButtonXPath)
+  @FindBy(xpath = SAVE_BUTTON_XPATH)
   private WebElement saveButton;
 
-  @FindBy(xpath = SubmitButtonXPath)
+  @FindBy(xpath = SUBMIT_BUTTON_XPATH)
   private WebElement submitEmailButton;
 
-  @FindBy(xpath = RedirectLinkXPath)
+  @FindBy(xpath = REDIRECT_LINK_XPATH)
   private WebElement redirectLink;
 
-  public EmailPage(WebDriver webDriver) {
-    super(webDriver);
+  public EmailPage() {
+    super();
   }
 
   public void fillEmailTo(String to) {
@@ -75,27 +73,11 @@ public class EmailPage extends Page {
   }
 
   public boolean isDraftEmailContactProper() {
-    boolean result;
-    try{
-      result = draftEmailContact.isDisplayed();
-      System.out.println("Correct draft contact is present");
-    } catch (NoSuchElementException e) {
-      result = false;
-      System.out.println("Correct draft contact is NOT present");
-    }
-    return result;
+    return isElementPresent(draftEmailContact, "Correct draft contact is present");
   }
 
   public boolean isDraftEmailSubjectProper() {
-    boolean result;
-    try {
-      result = draftEmailSubject.isDisplayed();
-      System.out.println("Correct draft subject is present");
-    } catch (NoSuchElementException e) {
-      result = false;
-      System.out.println("Correct draft subject is NOT present");
-    }
-    return result;
+    return isElementPresent(draftEmailSubject, "Correct draft subject is present");
   }
 
   public String getDraftEmailBody() {
@@ -111,16 +93,9 @@ public class EmailPage extends Page {
   }
 
   public boolean sendEmail() {
-    boolean result;
     submitEmailButton.click();
     System.out.println("Clicked \"Submit\" button to send the email");
-    try{
-      result = redirectLink.isDisplayed();
-      System.out.println("Email has been sent successfully");
-    } catch (NoSuchElementException e){
-      result = false;
-      System.out.println("Email has NOT been sent");
-    }
-    return result;
+
+    return isElementPresent(redirectLink, "Email has been sent");
   }
 }

@@ -1,14 +1,12 @@
 package com.epam.atm.pageObjectPattern.pages;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * Created by Ivan_Matsur on 2/2/2017.
  */
-public class MailBoxPage extends Page {
+public class MailBoxPage extends InnerPage {
 
   private final String FirstEmailInFolderXPath = "//div[@class='ns-view-container-desc mail-MessagesList js-messages-list']/div[1]";
   private final String NoEmailsLinkXPath = "//a[@class='b-messages__placeholder-item__link']";
@@ -19,37 +17,21 @@ public class MailBoxPage extends Page {
   @FindBy(xpath = NoEmailsLinkXPath)
   private WebElement noEmailsLink;
 
-  public MailBoxPage(WebDriver webDriver) {
-    super(webDriver);
+  public MailBoxPage() {
+    super();
   }
 
   public EmailPage openFirstEmail() {
     firstEmailInFolder.click();
     System.out.println("Opened the first email in the folder");
-    return new EmailPage(webDriver);
+    return new EmailPage();
   }
 
   public boolean isFirstEmailInFolderPresent() {
-    boolean result;
-    try {
-      result = firstEmailInFolder.isDisplayed();
-      System.out.println("There is an email in the folder");
-    } catch (NoSuchElementException e) {
-      result = false;
-      System.out.println("There is NO emails in the folder");
-    }
-    return result;
+    return isElementPresent(firstEmailInFolder, "There is an email in the folder");
   }
 
   public boolean isNoEmailsLinkPresent() {
-    boolean result;
-    try {
-      result = noEmailsLink.isDisplayed();
-      System.out.println("No emails link is present");
-    } catch (NoSuchElementException e) {
-      result = false;
-      System.out.println("No emails link is NOT present");
-    }
-    return result;
+    return isElementPresent(noEmailsLink, "No emails link is present");
   }
 }

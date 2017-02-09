@@ -1,11 +1,11 @@
 package com.epam.atm.pageObjectPattern.sections.folders;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
+import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 
 /**
  * Created by Ivan_Matsur on 2/2/2017.
@@ -16,50 +16,48 @@ public class Folder {
       INBOX, SENT, TRASH, SPAM, DRAFT
   }
 
-  private WebDriver webDriver;
   private Type type;
 
-  private final String InboxFolderXPath = "//a[@href='#inbox']";
-  private final String SentFolderXPath = "//a[@href='#sent']";
-  private final String TrashFolderXPath = "//a[@href='#trash']";
-  private final String SpamFolderXPath = "//a[@href='#spam']";
-  private final String DraftFolderXPath = "//a[@href='#draft']";
-  private final String EmailsNumberInXPath = "//span[@class='mail-NestedList-Item-Info-Extras']";
+  private final String INBOX_FOLDER_XPATH = "//a[@href='#inbox']";
+  private final String SENT_FOLDER_XPATH = "//a[@href='#sent']";
+  private final String TRASH_FOLDER_XPATH = "//a[@href='#trash']";
+  private final String SPAM_FOLDER_XPATH = "//a[@href='#spam']";
+  private final String DRAFT_FOLDER_XPATH = "//a[@href='#draft']";
+  private final String EMAILS_NUMBER_IN_XPATH = "//span[@class='mail-NestedList-Item-Info-Extras']";
 
-  @FindBy(xpath = InboxFolderXPath)
+  @FindBy(xpath = INBOX_FOLDER_XPATH)
   private WebElement inboxFolder;
 
-  @FindBy(xpath = SentFolderXPath)
+  @FindBy(xpath = SENT_FOLDER_XPATH)
   private WebElement sentFolder;
 
-  @FindBy(xpath = TrashFolderXPath)
+  @FindBy(xpath = TRASH_FOLDER_XPATH)
   private WebElement trashFolder;
 
-  @FindBy(xpath = SpamFolderXPath)
+  @FindBy(xpath = SPAM_FOLDER_XPATH)
   private WebElement spamFolder;
 
-  @FindBy(xpath = DraftFolderXPath)
+  @FindBy(xpath = DRAFT_FOLDER_XPATH)
   private WebElement draftFolder;
 
-  @FindBy(xpath = InboxFolderXPath + EmailsNumberInXPath)
+  @FindBy(xpath = INBOX_FOLDER_XPATH + EMAILS_NUMBER_IN_XPATH)
   private WebElement emailsNumberInInbox;
 
-  @FindBy(xpath = SentFolderXPath + EmailsNumberInXPath)
+  @FindBy(xpath = SENT_FOLDER_XPATH + EMAILS_NUMBER_IN_XPATH)
   private WebElement emailsNumberInSent;
 
-  @FindBy(xpath = TrashFolderXPath + EmailsNumberInXPath)
+  @FindBy(xpath = TRASH_FOLDER_XPATH + EMAILS_NUMBER_IN_XPATH)
   private WebElement emailsNumberInTrash;
 
-  @FindBy(xpath = SpamFolderXPath + EmailsNumberInXPath)
+  @FindBy(xpath = SPAM_FOLDER_XPATH + EMAILS_NUMBER_IN_XPATH)
   private WebElement emailsNumberInSpam;
 
-  @FindBy(xpath = DraftFolderXPath + EmailsNumberInXPath)
+  @FindBy(xpath = DRAFT_FOLDER_XPATH + EMAILS_NUMBER_IN_XPATH)
   private WebElement emailsNumberInDraft;
 
-  public Folder(WebDriver webDriver, Type type) {
-    this.webDriver = webDriver;
+  public Folder(Type type) {
     this.type = type;
-    PageFactory.initElements(this.webDriver, this);
+    PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
   }
 
   public MailBoxPage open() {
@@ -80,7 +78,7 @@ public class Folder {
       draftFolder.click();
     }
     System.out.println("Opened " + type.toString() + " folder");
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 
   public String getEmailsNumberIn() {

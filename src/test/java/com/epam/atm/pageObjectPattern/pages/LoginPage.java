@@ -1,39 +1,34 @@
 package com.epam.atm.pageObjectPattern.pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 
 /**
  * Created by Ivan_Matsur on 2/1/2017.
  */
-public class LoginPage {
+public class LoginPage extends Page {
 
-  private WebDriver webDriver;
+  private final String LOGIN_FIELD_XPATH = "//input[@name='login']";
+  private final String PASSWORD_FIELD_XPATH = "//input[@name='passwd']";
+  private final String LOGIN_BUTTON_XPATH = "//form[@method='POST']//button[contains(@class, auth__button)]";
 
-  private final String LoginFieldXPath = "//input[@name='login']";
-  private final String PasswordFieldXPath = "//input[@name='passwd']";
-  private final String LoginButtonXPath = "//form[@method='POST']//button[contains(@class, auth__button)]";
-
-  @FindBy(xpath = LoginFieldXPath)
+  @FindBy(xpath = LOGIN_FIELD_XPATH)
   private WebElement usernameField;
 
-  @FindBy(xpath = PasswordFieldXPath)
+  @FindBy(xpath = PASSWORD_FIELD_XPATH)
   private WebElement passwordField;
 
-  @FindBy(xpath = LoginButtonXPath)
+  @FindBy(xpath = LOGIN_BUTTON_XPATH)
   private WebElement loginButton;
 
-  public LoginPage(WebDriver webDriver) {
-    this.webDriver = webDriver;
-    PageFactory.initElements(this.webDriver, this);
+  public LoginPage() {
+    super();
   }
 
   public LoginPage openLoginPage() {
-    webDriver.navigate().to(YandexMailBoxTest.URL);
+    YandexMailBoxTest.WEB_DRIVER.navigate().to(YandexMailBoxTest.URL);
     System.out.println("Login page is opened");
     return this;
   }
@@ -43,6 +38,6 @@ public class LoginPage {
     passwordField.sendKeys(password);
     loginButton.click();
     System.out.println("Logged successfully");
-    return new MailBoxPage(webDriver);
+    return new MailBoxPage();
   }
 }

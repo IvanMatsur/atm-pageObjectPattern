@@ -1,42 +1,40 @@
 package com.epam.atm.pageObjectPattern.sections.toolbar;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.atm.pageObjectPattern.pages.EmailPage;
+import com.epam.atm.pageObjectPattern.pages.Page;
+import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 
 /**
  * Created by Ivan_Matsur on 2/2/2017.
  */
-public class Toolbar {
+public class Toolbar extends Page {
 
-  private WebDriver webDriver;
+  private final String TOOLBAR_XPATH = "//div[@data-key='box=toolbar-buttons-box']";
+  private final String SELECT_ALL_ITEM_XPATH = "//div[not(contains(@class, 'is-hidden'))]/label[@class='mail-Toolbar-Item-Checkbox']";
+  private final String NEW_EMAIL_XPATH = "//a[@href='#compose']";
+  private final String DELETE_SELECTED_XPATH = "//div[contains(@data-key, 'view=toolbar-button-delete')]";
 
-  private final String ToolbarXPath = "//div[@data-key='box=toolbar-buttons-box']";
-  private final String SelectAllItemXPath = "//div[not(contains(@class, 'is-hidden'))]/label[@class='mail-Toolbar-Item-Checkbox']";
-  private final String NewEmailItemXPath = "//a[@href='#compose']";
-  private final String DeleteSelectedXPath = "//div[contains(@data-key, 'view=toolbar-button-delete')]";
-
-  @FindBy(xpath = ToolbarXPath + SelectAllItemXPath)
+  @FindBy(xpath = TOOLBAR_XPATH + SELECT_ALL_ITEM_XPATH)
   private WebElement selectAllCheckbox;
 
-  @FindBy(xpath = ToolbarXPath + NewEmailItemXPath)
+  @FindBy(xpath = TOOLBAR_XPATH + NEW_EMAIL_XPATH)
   private WebElement newEmail;
 
-  @FindBy(xpath = ToolbarXPath + DeleteSelectedXPath)
+  @FindBy(xpath = TOOLBAR_XPATH + DELETE_SELECTED_XPATH)
   private WebElement deleteSelected;
 
-  public Toolbar(WebDriver webDriver) {
-    this.webDriver = webDriver;
-    PageFactory.initElements(this.webDriver, this);
+  public Toolbar() {
+    PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
   }
 
   public EmailPage writeNewEmail() {
     newEmail.click();
     System.out.println("Clicked button to create a new email");
-    return new EmailPage(webDriver);
+    return new EmailPage();
   }
 
   public void selectAllEmails() {
