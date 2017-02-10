@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -25,13 +27,22 @@ public class YandexMailBoxTest {
   public final static String MAIL_TO = "test@test.by";
   public final static String MAIL_SUBJECT = "Test";
   public final String MAIL_BODY = "Hello World!";
+  public final String BROWSER = "Chrome";
 
   public static WebDriver WEB_DRIVER;
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeClass
   private void doPreparationForTests() {
-    System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
-    WEB_DRIVER = new ChromeDriver();
+    if(BROWSER.equals("Chrome")) {
+      System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
+      WEB_DRIVER = new ChromeDriver();
+    } else {
+      System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckoDriver/geckodriver.exe");
+//      FirefoxProfile profile = new FirefoxProfile();
+//      profile.setEnableNativeEvents(true);
+      WEB_DRIVER = new FirefoxDriver(/*profile*/);
+    }
+
     WEB_DRIVER.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     WEB_DRIVER.manage().window().maximize();
   }
@@ -49,7 +60,7 @@ public class YandexMailBoxTest {
       mailBoxPage.toolbar().deleteSelectedEmails();
     }
 
-    mailBoxPage.folders().openDraftFolder();
+    mailBoxPage = mailBoxPage.folders().openDraftFolder();
 
     if (mailBoxPage.isFirstEmailInFolderPresent()) {
       mailBoxPage.toolbar().selectAllEmails();

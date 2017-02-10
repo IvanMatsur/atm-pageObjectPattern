@@ -1,6 +1,7 @@
 package com.epam.atm.pageObjectPattern.pages;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
@@ -11,9 +12,13 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 public class EmailPage extends InnerPage {
 
   private final String NEW_EMAIL_TO_FIELD_XPATH = "//div[@name='to']";
-  private final String DRAFT_EMAIL_CONTACT_XPATH = "//span[@data-contact-email='"+ YandexMailBoxTest.MAIL_TO +"']";
+  private final String DRAFT_EMAIL_CONTACT_XPATH = "//span[@data-contact-email='"
+                                                   + YandexMailBoxTest.MAIL_TO
+                                                   + "']";
   private final String NEW_EMAIL_SUBJECT_FIELD_XPATH = "//input[@name='subj']";
-  private final String DRAFT_EMAIL_SUBJECT_XPATH = "//input[@name='subj' and @value='"+ YandexMailBoxTest.MAIL_SUBJECT +"']";
+  private final String DRAFT_EMAIL_SUBJECT_XPATH = "//input[@name='subj' and @value='"
+                                                   + YandexMailBoxTest.MAIL_SUBJECT
+                                                   + "']";
   private final String NEW_EMAIL_BODY_AREA_XPATH = "//div[@role='textbox']";
   private final String DRAFT_EMAIL_BODY_XPATH = "//div[@role='textbox']/div";
   private final String SAVE_BUTTON_XPATH = "//button[@data-action='save']";
@@ -62,7 +67,7 @@ public class EmailPage extends InnerPage {
   }
 
   public void fillEmailBody(String body) {
-    newEmailBodyArea.sendKeys(body);
+    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(newEmailBodyArea).click().sendKeys(body).build().perform();
     System.out.println("Filled email \"Body\" text area");
   }
 
@@ -93,7 +98,7 @@ public class EmailPage extends InnerPage {
   }
 
   public boolean sendEmail() {
-    submitEmailButton.click();
+    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(submitEmailButton).click().build().perform();
     System.out.println("Clicked \"Submit\" button to send the email");
 
     return isElementPresent(redirectLink, "Email has been sent");

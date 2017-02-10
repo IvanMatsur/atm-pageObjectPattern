@@ -1,6 +1,5 @@
 package com.epam.atm.pageObjectPattern.pages;
 
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -15,7 +14,7 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
  */
 public class InnerPage extends Page {
 
-  private final String EMAIL_ADDRESS_XPATH = "//div[@class='mail-User-Name']";
+  private final String EMAIL_ADDRESS_XPATH = "//div[@data-key='view=head-user']";
 
   protected FoldersSection foldersSection;
   protected Toolbar toolbar;
@@ -52,17 +51,5 @@ public class InnerPage extends Page {
     emailAddress.click();
     System.out.println("Opened popup with Logout button");
     return new Logout();
-  }
-
-  public boolean isElementPresent(WebElement webElement, String s) {
-    boolean result;
-    try {
-      result = webElement.isDisplayed();
-      System.out.println(s + " : TRUE");
-    } catch (NoSuchElementException e) {
-      result = false;
-      System.out.println(s + " : FALSE");
-    }
-    return result;
   }
 }
