@@ -34,15 +34,15 @@ public class YandexMailBoxTest {
 
   @BeforeClass
   private void doPreparationForTests() {
-      System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
-      DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-      capabilities.setPlatform(Platform.WINDOWS);
+    System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
+    DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    capabilities.setPlatform(Platform.WINDOWS);
 
-      try {
-        WEB_DRIVER = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
-      } catch (MalformedURLException e) {
-        e.printStackTrace();
-      }
+    try {
+      WEB_DRIVER = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    }
 
     WEB_DRIVER.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     WEB_DRIVER.manage().window().maximize();
