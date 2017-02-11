@@ -8,8 +8,8 @@ import org.openqa.selenium.support.FindBy;
  */
 public class MailBoxPage extends InnerPage {
 
-  private final String FirstEmailInFolderXPath = "//div[@class='ns-view-container-desc mail-MessagesList js-messages-list']/div[1]";
-  private final String NoEmailsLinkXPath = "//a[@class='b-messages__placeholder-item__link']";
+  private final String FirstEmailInFolderXPath = "//div[contains(@class, 'mail-MessagesList')]/div[1]";
+  private final String NoEmailsLinkXPath = "//a[contains(@class, 'b-messages__placeholder-item__link')]";
 
   @FindBy(xpath = FirstEmailInFolderXPath)
   private WebElement firstEmailInFolder;
@@ -22,6 +22,7 @@ public class MailBoxPage extends InnerPage {
   }
 
   public EmailPage openFirstEmail() {
+    addJSBorderColorToElement(firstEmailInFolder);
     firstEmailInFolder.click();
     System.out.println("Opened the first email in the folder");
     return new EmailPage();
@@ -32,6 +33,7 @@ public class MailBoxPage extends InnerPage {
   }
 
   public boolean isNoEmailsLinkPresent() {
+    addJSBorderColorToElement(noEmailsLink);
     return isElementPresent(noEmailsLink, "No emails link is present");
   }
 }

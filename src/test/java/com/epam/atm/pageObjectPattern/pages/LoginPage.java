@@ -34,9 +34,15 @@ public class LoginPage extends Page {
   }
 
   public MailBoxPage doLogin(String username, String password) {
+    addJSBorderColorToElement(usernameField);
     usernameField.sendKeys(username);
+
+    addJSBorderColorToElement(passwordField);
     passwordField.sendKeys(password);
+
+    addJSBorderColorToElement(loginButton);
     loginButton.click();
+
     System.out.println("Logged successfully");
     return new MailBoxPage();
   }

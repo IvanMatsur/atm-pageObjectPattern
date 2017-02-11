@@ -57,16 +57,19 @@ public class EmailPage extends InnerPage {
   }
 
   public void fillEmailTo(String to) {
+    addJSBorderColorToElement(newEmailToField);
     newEmailToField.sendKeys(to);
     System.out.println("Filled email \"To\" field");
   }
 
   public void fillSubject(String subject) {
+    addJSBorderColorToElement(newEmailSubjectField);
     newEmailSubjectField.sendKeys(subject);
     System.out.println("Filled email \"Subject\" field");
   }
 
   public void fillEmailBody(String body) {
+    addJSBorderColorToElement(newEmailBodyArea);
     new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(newEmailBodyArea).click().sendKeys(body).build().perform();
     System.out.println("Filled email \"Body\" text area");
   }
@@ -78,29 +81,35 @@ public class EmailPage extends InnerPage {
   }
 
   public boolean isDraftEmailContactProper() {
+    addJSBorderColorToElement(draftEmailContact);
     return isElementPresent(draftEmailContact, "Correct draft contact is present");
   }
 
   public boolean isDraftEmailSubjectProper() {
+    addJSBorderColorToElement(draftEmailSubject);
     return isElementPresent(draftEmailSubject, "Correct draft subject is present");
   }
 
   public String getDraftEmailBody() {
+    addJSBorderColorToElement(draftEmailBody);
     String result = draftEmailBody.getText();
     System.out.println("Got draft body text");
     return result;
   }
 
   public EmailPage clickPopUpSaveButton() {
+    addJSBorderColorToElement(saveButton);
     saveButton.click();
     System.out.println("Clicked \"Save\" button to save new email as a draft");
     return this;
   }
 
   public boolean sendEmail() {
+    addJSBorderColorToElement(submitEmailButton);
     new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(submitEmailButton).click().build().perform();
     System.out.println("Clicked \"Submit\" button to send the email");
 
+    addJSBorderColorToElement(submitEmailButton);
     return isElementPresent(redirectLink, "Email has been sent");
   }
 }

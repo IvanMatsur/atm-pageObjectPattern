@@ -11,7 +11,7 @@ import com.epam.atm.pageObjectPattern.pages.Page;
  */
 public class Logout extends Page {
 
-  private final String LOGOUT_BUTTON_XPATH = "//div[@class='b-mail-dropdown__item'][last()]";
+  private final String LOGOUT_BUTTON_XPATH = "//div[contains(@class, 'b-mail-dropdown__item')][last()]";
 
   @FindBy(xpath = LOGOUT_BUTTON_XPATH)
   private WebElement logoutButton;
@@ -21,7 +21,8 @@ public class Logout extends Page {
   }
 
   public LoginPage doLogout() {
-    if (isElementPresent(logoutButton, "")) {
+    if (isElementPresent(logoutButton)) {
+      addJSBorderColorToElement(logoutButton);
       logoutButton.click();
       System.out.println("Clicked button to log out");
     }

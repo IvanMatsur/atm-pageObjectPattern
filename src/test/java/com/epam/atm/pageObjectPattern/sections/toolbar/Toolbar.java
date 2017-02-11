@@ -14,7 +14,7 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 public class Toolbar extends Page {
 
   private final String TOOLBAR_XPATH = "//div[@data-key='box=toolbar-buttons-box']";
-  private final String SELECT_ALL_ITEM_XPATH = "//div[not(contains(@class, 'is-hidden'))]/label[@class='mail-Toolbar-Item-Checkbox']";
+  private final String SELECT_ALL_ITEM_XPATH = "//div[not(contains(@class, 'is-hidden'))]/label[contains(@class, 'mail-Toolbar-Item-Checkbox')]";
   private final String NEW_EMAIL_XPATH = "//a[@href='#compose']";
   private final String DELETE_SELECTED_XPATH = "//div[contains(@data-key, 'view=toolbar-button-delete')]";
 
@@ -32,6 +32,7 @@ public class Toolbar extends Page {
   }
 
   public EmailPage writeNewEmail() {
+    addJSBorderColorToElement(newEmail);
     newEmail.click();
     System.out.println("Clicked button to create a new email");
     return new EmailPage();
@@ -39,11 +40,13 @@ public class Toolbar extends Page {
 
   public void selectAllEmails() {
     System.out.println("Checked off checkbox to select all present emails");
+    addJSBorderColorToElement(selectAllCheckbox);
     selectAllCheckbox.click();
   }
 
   public void deleteSelectedEmails() {
     System.out.println("Clicked button to delete all selected emails");
+    addJSBorderColorToElement(deleteSelected);
     deleteSelected.click();
   }
 }

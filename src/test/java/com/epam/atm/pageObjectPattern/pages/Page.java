@@ -1,5 +1,6 @@
 package com.epam.atm.pageObjectPattern.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -26,4 +27,23 @@ public abstract class Page {
     }
     return result;
   }
+
+  public boolean isElementPresent(WebElement webElement) {
+    boolean result;
+    try {
+      result = webElement.isDisplayed();
+    } catch (NoSuchElementException e) {
+      result = false;
+    }
+    return result;
+  }
+
+  public void addJSBorderColorToElement(WebElement element) {
+    //JS Executor
+    String bg = element.getCssValue("backgroundColor");
+    JavascriptExecutor js = ((JavascriptExecutor)YandexMailBoxTest.WEB_DRIVER);
+    js.executeScript("arguments[0].style.backgroundColor = '" + "Cyan" + "'", element);
+    js.executeScript("arguments[0].style.backgroundColor = '" + bg + "'", element);
+  }
+
 }
