@@ -2,6 +2,7 @@ package com.epam.atm.pageObjectPattern.pages;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -13,7 +14,19 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 public abstract class Page {
 
   public Page() {
-    PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
+    boolean pageInitialized = false;
+
+    while (!pageInitialized){
+      try {
+        PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
+        pageInitialized = true;
+      } catch (StaleElementReferenceException e1) {
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e2) {
+        }
+      }
+    }
   }
 
   public boolean isElementPresent(WebElement webElement, String s) {
@@ -39,7 +52,7 @@ public abstract class Page {
   }
 
   public void addJSBorderColorToElement(WebElement element) {
-    //JS Executor
+    //JS Executor Highlighter
     String bg = element.getCssValue("backgroundColor");
     JavascriptExecutor js = ((JavascriptExecutor)YandexMailBoxTest.WEB_DRIVER);
     js.executeScript("arguments[0].style.backgroundColor = '" + "Cyan" + "'", element);

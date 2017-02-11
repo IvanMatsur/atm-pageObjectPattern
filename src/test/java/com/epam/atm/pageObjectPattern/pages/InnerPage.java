@@ -15,12 +15,12 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
  */
 public class InnerPage extends Page {
 
-  private final String EMAIL_ADDRESS_XPATH = "//div[@data-key='view=head-user']";
+  private final String EMAIL_ADDRESS_CSS = "div[data-key='view=head-user']";
 
   protected FoldersSection foldersSection;
   protected Toolbar toolbar;
 
-  @FindBy(xpath = EMAIL_ADDRESS_XPATH)
+  @FindBy(css = EMAIL_ADDRESS_CSS)
   private WebElement emailAddress;
 
   public InnerPage() {
@@ -30,29 +30,29 @@ public class InnerPage extends Page {
     PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
   }
 
-  public FoldersSection folders() {
+  public FoldersSection getFoldersSection() {
     FoldersSection foldersSection = this.foldersSection;
     System.out.println("Got access to Folder Section");
     return foldersSection;
   }
 
-  public Toolbar toolbar() {
+  public Toolbar getToolbar() {
     Toolbar toolbar = this.toolbar;
     System.out.println("Got access to Toolbar");
     return this.toolbar;
   }
 
-  public String emailAddress() {
+  public String getEmailAddress() {
     String userEmailAddress = emailAddress.getText();
     System.out.println("Got email address: " + userEmailAddress);
     return userEmailAddress;
   }
 
-  public Logout logout() {
+  public Logout getLogoutPopup() {
     addJSBorderColorToElement(emailAddress);
-    //JS Executor
+    //JS Executor Clicker
     JavascriptExecutor jsExec = (JavascriptExecutor) YandexMailBoxTest.WEB_DRIVER;
-    jsExec.executeScript("document.querySelector(\"div[data-key='view=head-user']\").click()");
+    jsExec.executeScript("document.querySelector(\"" + EMAIL_ADDRESS_CSS + "\").click()");
     System.out.println("Opened popup with Logout button");
     return new Logout();
   }

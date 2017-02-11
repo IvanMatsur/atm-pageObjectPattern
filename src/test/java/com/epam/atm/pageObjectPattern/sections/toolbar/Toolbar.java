@@ -49,4 +49,9 @@ public class Toolbar extends Page {
     addJSBorderColorToElement(deleteSelected);
     deleteSelected.click();
   }
+
+  public void selectAndDeleteAllEmails() {
+    selectAllEmails();
+    deleteSelectedEmails();
+  }
 }

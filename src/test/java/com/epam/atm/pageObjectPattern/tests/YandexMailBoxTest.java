@@ -53,21 +53,25 @@ public class YandexMailBoxTest {
       new LoginPage().openLoginPage().doLogin(USERNAME, PASSWORD);
     }
 
-    MailBoxPage mailBoxPage = new MailBoxPage().folders().openSentFolder();
+    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openSentFolder();
 
     if (mailBoxPage.isFirstEmailInFolderPresent()) {
-      mailBoxPage.toolbar().selectAllEmails();
-      mailBoxPage.toolbar().deleteSelectedEmails();
+      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
     }
 
-    mailBoxPage = mailBoxPage.folders().openDraftFolder();
+    mailBoxPage = mailBoxPage.getFoldersSection().openDraftFolder();
 
     if (mailBoxPage.isFirstEmailInFolderPresent()) {
-      mailBoxPage.toolbar().selectAllEmails();
-      mailBoxPage.toolbar().deleteSelectedEmails();
+      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
     }
 
-    mailBoxPage.logout().doLogout();
+    mailBoxPage = mailBoxPage.getFoldersSection().openTrashFolder();
+
+    if (mailBoxPage.isFirstEmailInFolderPresent()) {
+      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
+    }
+
+    mailBoxPage.getLogoutPopup().doLogout();
 
     WEB_DRIVER.quit();
   }
@@ -75,15 +79,15 @@ public class YandexMailBoxTest {
   @Test(description = "Check that login is successful", groups = "login")
   public void loginToMailBox() {
     MailBoxPage mailBoxPage = new LoginPage().openLoginPage().doLogin(USERNAME, PASSWORD);
-    String emailAddress = mailBoxPage.emailAddress();
+    String emailAddress = mailBoxPage.getEmailAddress();
     Assert.assertEquals(emailAddress, EMAIL, "Login failed");
   }
 
   @Test(description = "Check that new email can be created and saved as draft", groups = "creation", dependsOnMethods = "loginToMailBox")
   public void createEmailDraft() {
-    EmailPage emailPage = new MailBoxPage().toolbar().writeNewEmail();
+    EmailPage emailPage = new MailBoxPage().getToolbar().writeNewEmail();
     emailPage.fillAllEmailFields(MAIL_TO, MAIL_SUBJECT, MAIL_BODY);
-    MailBoxPage mailBoxPage = emailPage.folders().openDraftFolder();
+    MailBoxPage mailBoxPage = emailPage.getFoldersSection().openDraftFolder();
     emailPage.clickPopUpSaveButton();
     Assert.assertTrue(
       mailBoxPage.isFirstEmailInFolderPresent(),
@@ -92,7 +96,7 @@ public class YandexMailBoxTest {
 
   @Test(description = "Check content of the sent email", groups = "content", dependsOnMethods = "createEmailDraft")
   public void checkDraftContent() {
-    EmailPage emailPage = new MailBoxPage().folders().openDraftFolder().openFirstEmail();
+    EmailPage emailPage = new MailBoxPage().getFoldersSection().openDraftFolder().openFirstEmail();
     Assert.assertTrue(emailPage.isDraftEmailContactProper(), "Address of the saved draft is incorrect");
     Assert.assertTrue(emailPage.isDraftEmailSubjectProper(), "Subject of the saved draft is incorrect");
     Assert.assertEquals(emailPage.getDraftEmailBody(), MAIL_BODY, "Body of the saved draft is incorrect");
@@ -100,25 +104,25 @@ public class YandexMailBoxTest {
 
   @Test(description = "Check that draft can be sent", groups = "send", dependsOnMethods = "checkDraftContent")
   public void sendDraft() {
-    EmailPage emailPage = new MailBoxPage().folders().openDraftFolder().openFirstEmail();
+    EmailPage emailPage = new MailBoxPage().getFoldersSection().openDraftFolder().openFirstEmail();
     Assert.assertTrue(emailPage.sendEmail(), "Sending draft email failed");
   }
 
   @Test(description = "Check that Draft folder is empty", groups = "send", dependsOnGroups = "content", dependsOnMethods = "sendDraft")
   public void isNoDrafts() {
-    MailBoxPage mailBoxPage = new MailBoxPage().folders().openDraftFolder();
+    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openDraftFolder();
     Assert.assertTrue(mailBoxPage.isNoEmailsLinkPresent(), "Draft folder is NOT empty");
   }
 
   @Test(description = "Check that email is in Sent folder", groups = "send", dependsOnGroups = "content", dependsOnMethods = "sendDraft")
   public void isMailSent() {
-    MailBoxPage mailBoxPage = new MailBoxPage().folders().openSentFolder();
+    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openSentFolder();
     Assert.assertTrue(mailBoxPage.isFirstEmailInFolderPresent(), "Sent email is NOT in Sent folder");
   }
 
   @Test(description = "Check logout is successful", groups = "logout", dependsOnGroups = "send", alwaysRun = true)
   public void logoutTest() {
-    new MailBoxPage().logout().doLogout();
+    new MailBoxPage().getLogoutPopup().doLogout();
     Assert.assertEquals(WEB_DRIVER.getCurrentUrl(), URL, "Logout failed");
   }
 }
