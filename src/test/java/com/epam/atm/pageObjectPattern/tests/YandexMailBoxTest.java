@@ -1,11 +1,13 @@
 package com.epam.atm.pageObjectPattern.tests;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -27,21 +29,20 @@ public class YandexMailBoxTest {
   public final static String MAIL_TO = "test@test.by";
   public final static String MAIL_SUBJECT = "Test";
   public final String MAIL_BODY = "Hello World!";
-  public final String BROWSER = "Chrome";
 
   public static WebDriver WEB_DRIVER;
 
   @BeforeClass
   private void doPreparationForTests() {
-    if(BROWSER.equals("Chrome")) {
       System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
-      WEB_DRIVER = new ChromeDriver();
-    } else {
-      System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckoDriver/geckodriver.exe");
-//      FirefoxProfile profile = new FirefoxProfile();
-//      profile.setEnableNativeEvents(true);
-      WEB_DRIVER = new FirefoxDriver(/*profile*/);
-    }
+      DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+      capabilities.setPlatform(Platform.WINDOWS);
+
+      try {
+        WEB_DRIVER = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+      } catch (MalformedURLException e) {
+        e.printStackTrace();
+      }
 
     WEB_DRIVER.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     WEB_DRIVER.manage().window().maximize();
