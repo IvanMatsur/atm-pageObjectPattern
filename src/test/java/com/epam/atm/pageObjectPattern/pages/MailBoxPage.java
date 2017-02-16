@@ -8,13 +8,13 @@ import org.openqa.selenium.support.FindBy;
  */
 public class MailBoxPage extends InnerPage {
 
-  private final String FirstEmailInFolderXPath = "//div[contains(@class, 'mail-MessagesList')]/div[1]";
-  private final String NoEmailsLinkXPath = "//a[contains(@class, 'b-messages__placeholder-item__link')]";
+  private final String FIRST_EMAIL_IN_FOLDER_XPATH = "//div[contains(@class, 'mail-MessagesList')]/div[1]";
+  private final String NO_EMAILS_LINK_XPATH = "//a[contains(@class, 'b-messages__placeholder-item__link')]";
 
-  @FindBy(xpath = FirstEmailInFolderXPath)
+  @FindBy(xpath = FIRST_EMAIL_IN_FOLDER_XPATH)
   private WebElement firstEmailInFolder;
 
-  @FindBy(xpath = NoEmailsLinkXPath)
+  @FindBy(xpath = NO_EMAILS_LINK_XPATH)
   private WebElement noEmailsLink;
 
   public MailBoxPage() {

@@ -58,4 +58,30 @@ public class FoldersSection {
   public String getEmailsNumberInDraftFolder() {
     return draftFolder.getEmailsNumberIn();
   }
+
+  public MailBoxPage openAndCleanFolder(Folder.Type type) {
+    Folder folder = null;
+    switch (type) {
+      case INBOX:
+        folder = inboxFolder;
+        break;
+      case SENT:
+        folder = sentFolder;
+        break;
+      case TRASH:
+        folder = trashFolder;
+        break;
+      case SPAM:
+        folder = spamFolder;
+        break;
+      case DRAFT:
+        folder = draftFolder;
+    }
+    MailBoxPage mailBoxPage = folder.open();
+
+    if (mailBoxPage.isFirstEmailInFolderPresent()) {
+      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
+    }
+    return mailBoxPage;
+  }
 }

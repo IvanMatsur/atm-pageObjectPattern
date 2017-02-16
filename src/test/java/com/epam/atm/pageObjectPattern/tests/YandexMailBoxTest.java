@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
@@ -16,6 +17,7 @@ import org.testng.annotations.Test;
 import com.epam.atm.pageObjectPattern.pages.EmailPage;
 import com.epam.atm.pageObjectPattern.pages.LoginPage;
 import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
+import com.epam.atm.pageObjectPattern.sections.folders.Folder;
 
 /**
  * Created by Ivan_Matsur on 2/1/2017.
@@ -35,15 +37,15 @@ public class YandexMailBoxTest {
   @BeforeClass
   private void doPreparationForTests() {
     System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromeDriver/chromedriver.exe");
-    DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     capabilities.setPlatform(Platform.WINDOWS);
 
     try {
       WEB_DRIVER = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
     } catch (MalformedURLException e) {
       e.printStackTrace();
-    }
-
+    }*/
+    WEB_DRIVER = new ChromeDriver();
     WEB_DRIVER.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     WEB_DRIVER.manage().window().maximize();
   }
@@ -54,23 +56,9 @@ public class YandexMailBoxTest {
       new LoginPage().openLoginPage().doLogin(USERNAME, PASSWORD);
     }
 
-    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openSentFolder();
-
-    if (mailBoxPage.isFirstEmailInFolderPresent()) {
-      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
-    }
-
-    mailBoxPage = mailBoxPage.getFoldersSection().openDraftFolder();
-
-    if (mailBoxPage.isFirstEmailInFolderPresent()) {
-      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
-    }
-
-    mailBoxPage = mailBoxPage.getFoldersSection().openTrashFolder();
-
-    if (mailBoxPage.isFirstEmailInFolderPresent()) {
-      mailBoxPage.getToolbar().selectAndDeleteAllEmails();
-    }
+    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openAndCleanFolder(Folder.Type.SENT);
+    mailBoxPage = mailBoxPage.getFoldersSection().openAndCleanFolder(Folder.Type.DRAFT);
+    mailBoxPage = mailBoxPage.getFoldersSection().openAndCleanFolder(Folder.Type.TRASH);
 
     mailBoxPage.getLogoutPopup().doLogout();
 

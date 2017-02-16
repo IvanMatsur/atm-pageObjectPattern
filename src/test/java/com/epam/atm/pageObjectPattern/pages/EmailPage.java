@@ -1,7 +1,6 @@
 package com.epam.atm.pageObjectPattern.pages;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
@@ -70,7 +69,7 @@ public class EmailPage extends InnerPage {
 
   public void fillEmailBody(String body) {
     addJSBorderColorToElement(newEmailBodyArea);
-    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(newEmailBodyArea).click().sendKeys(body).build().perform();
+    actionMoveToElementAndClickAndSendKeys(newEmailBodyArea, body);
     System.out.println("Filled email \"Body\" text area");
   }
 
@@ -106,10 +105,10 @@ public class EmailPage extends InnerPage {
 
   public boolean sendEmail() {
     addJSBorderColorToElement(submitEmailButton);
-    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(submitEmailButton).click().build().perform();
+    actionMoveToElementAndClick(submitEmailButton);
     System.out.println("Clicked \"Submit\" button to send the email");
 
-    addJSBorderColorToElement(submitEmailButton);
+    addJSBorderColorToElement(redirectLink);
     return isElementPresent(redirectLink, "Email has been sent");
   }
 }

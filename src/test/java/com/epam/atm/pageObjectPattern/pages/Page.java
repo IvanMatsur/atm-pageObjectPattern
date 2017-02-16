@@ -4,6 +4,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
@@ -59,4 +60,16 @@ public abstract class Page {
     js.executeScript("arguments[0].style.backgroundColor = '" + bg + "'", element);
   }
 
+  public void addJSClickerByQuerySelector(String css) {
+    JavascriptExecutor jsExec = (JavascriptExecutor) YandexMailBoxTest.WEB_DRIVER;
+    jsExec.executeScript("document.querySelector(\"" + css + "\").click()");
+  }
+
+  public void actionMoveToElementAndClickAndSendKeys(WebElement webElement, String text) {
+    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(webElement).click().sendKeys(text).build().perform();
+  }
+
+  public void actionMoveToElementAndClick(WebElement webElement) {
+    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(webElement).click().build().perform();
+  }
 }

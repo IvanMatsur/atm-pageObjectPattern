@@ -1,6 +1,5 @@
 package com.epam.atm.pageObjectPattern.pages;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -50,9 +49,7 @@ public class InnerPage extends Page {
 
   public Logout getLogoutPopup() {
     addJSBorderColorToElement(emailAddress);
-    //JS Executor Clicker
-    JavascriptExecutor jsExec = (JavascriptExecutor) YandexMailBoxTest.WEB_DRIVER;
-    jsExec.executeScript("document.querySelector(\"" + EMAIL_ADDRESS_CSS + "\").click()");
+    addJSClickerByQuerySelector(EMAIL_ADDRESS_CSS);
     System.out.println("Opened popup with Logout button");
     return new Logout();
   }
