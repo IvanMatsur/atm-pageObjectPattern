@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 /**
  * Created by Ivan_Matsur on 2/17/2017.
  */
-public class BaseTest {
+public abstract class BaseTest {
 
   private static WebDriver webDriver;
 
