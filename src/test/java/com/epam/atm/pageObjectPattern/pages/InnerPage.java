@@ -4,10 +4,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.epam.atm.pageObjectPattern.sections.folders.FoldersSection;
-import com.epam.atm.pageObjectPattern.sections.logout.Logout;
-import com.epam.atm.pageObjectPattern.sections.toolbar.Toolbar;
-import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
+import com.epam.atm.pageObjectPattern.pages.pageSections.folders.FoldersSection;
+import com.epam.atm.pageObjectPattern.pages.pageSections.logout.Logout;
+import com.epam.atm.pageObjectPattern.pages.pageSections.toolbar.Toolbar;
+import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
  * Created by Ivan_Matsur on 2/4/2017.
@@ -26,7 +26,7 @@ public class InnerPage extends Page {
     super();
     this.foldersSection = new FoldersSection();
     this.toolbar = new Toolbar();
-    PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
+    PageFactory.initElements(BaseTest.getDriver(), this);
   }
 
   public FoldersSection getFoldersSection() {

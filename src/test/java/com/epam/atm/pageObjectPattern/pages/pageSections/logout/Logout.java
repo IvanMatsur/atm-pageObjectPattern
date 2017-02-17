@@ -1,4 +1,4 @@
-package com.epam.atm.pageObjectPattern.sections.logout;
+package com.epam.atm.pageObjectPattern.pages.pageSections.logout;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

@@ -1,12 +1,13 @@
-package com.epam.atm.pageObjectPattern.sections.toolbar;
+package com.epam.atm.pageObjectPattern.pages.pageSections.toolbar;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.epam.atm.pageObjectPattern.models.Email;
 import com.epam.atm.pageObjectPattern.pages.EmailPage;
 import com.epam.atm.pageObjectPattern.pages.Page;
-import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
+import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
  * Created by Ivan_Matsur on 2/2/2017.
@@ -28,14 +29,14 @@ public class Toolbar extends Page {
   private WebElement deleteSelected;
 
   public Toolbar() {
-    PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
+    PageFactory.initElements(BaseTest.getDriver(), this);
   }
 
-  public EmailPage writeNewEmail() {
+  public EmailPage writeNewEmail(Email email) {
     addJSBorderColorToElement(newEmail);
     newEmail.click();
     System.out.println("Clicked button to create a new email");
-    return new EmailPage();
+    return new EmailPage(email);
   }
 
   public void selectAllEmails() {

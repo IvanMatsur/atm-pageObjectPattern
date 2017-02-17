@@ -1,4 +1,4 @@
-package com.epam.atm.pageObjectPattern.sections.folders;
+package com.epam.atm.pageObjectPattern.pages.pageSections.folders;
 
 import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
 

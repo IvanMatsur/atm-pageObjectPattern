@@ -1,4 +1,4 @@
-package com.epam.atm.pageObjectPattern.sections.folders;
+package com.epam.atm.pageObjectPattern.pages.pageSections.folders;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -78,6 +78,7 @@ public class Folder extends Page {
       folder = draftFolder;
     }
 
+    addExplicitWaiterToBeClickable(folder);
     addJSBorderColorToElement(folder);
     folder.click();
     System.out.println("Opened " + type.toString() + " folder");

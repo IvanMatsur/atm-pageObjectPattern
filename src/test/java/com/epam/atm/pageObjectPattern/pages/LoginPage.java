@@ -3,7 +3,7 @@ package com.epam.atm.pageObjectPattern.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
+import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
  * Created by Ivan_Matsur on 2/1/2017.
@@ -27,8 +27,8 @@ public class LoginPage extends Page {
     super();
   }
 
-  public LoginPage openLoginPage() {
-    YandexMailBoxTest.WEB_DRIVER.navigate().to(YandexMailBoxTest.URL);
+  public LoginPage openLoginPage(String url) {
+    BaseTest.getDriver().navigate().to(url);
     System.out.println("Login page is opened");
     return this;
   }

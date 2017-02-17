@@ -3,6 +3,8 @@ package com.epam.atm.pageObjectPattern.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.epam.atm.pageObjectPattern.models.Email;
+
 /**
  * Created by Ivan_Matsur on 2/2/2017.
  */
@@ -21,11 +23,11 @@ public class MailBoxPage extends InnerPage {
     super();
   }
 
-  public EmailPage openFirstEmail() {
+  public EmailPage openFirstEmail(Email email) {
     addJSBorderColorToElement(firstEmailInFolder);
     firstEmailInFolder.click();
     System.out.println("Opened the first email in the folder");
-    return new EmailPage();
+    return new EmailPage(email);
   }
 
   public boolean isFirstEmailInFolderPresent() {

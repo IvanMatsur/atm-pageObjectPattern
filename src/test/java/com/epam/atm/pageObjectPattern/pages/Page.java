@@ -2,12 +2,13 @@ package com.epam.atm.pageObjectPattern.pages;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
+import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
  * Created by Ivan_Matsur on 2/8/2017.
@@ -15,19 +16,7 @@ import com.epam.atm.pageObjectPattern.tests.YandexMailBoxTest;
 public abstract class Page {
 
   public Page() {
-    boolean pageInitialized = false;
-
-    while (!pageInitialized){
-      try {
-        PageFactory.initElements(YandexMailBoxTest.WEB_DRIVER, this);
-        pageInitialized = true;
-      } catch (StaleElementReferenceException e1) {
-        try {
-          Thread.sleep(1000);
-        } catch (InterruptedException e2) {
-        }
-      }
-    }
+      PageFactory.initElements(BaseTest.getDriver(), this);
   }
 
   public boolean isElementPresent(WebElement webElement, String s) {
@@ -55,21 +44,26 @@ public abstract class Page {
   public void addJSBorderColorToElement(WebElement element) {
     //JS Executor Highlighter
     String bg = element.getCssValue("backgroundColor");
-    JavascriptExecutor js = ((JavascriptExecutor)YandexMailBoxTest.WEB_DRIVER);
+    JavascriptExecutor js = ((JavascriptExecutor) BaseTest.getDriver());
     js.executeScript("arguments[0].style.backgroundColor = '" + "Cyan" + "'", element);
     js.executeScript("arguments[0].style.backgroundColor = '" + bg + "'", element);
   }
 
   public void addJSClickerByQuerySelector(String css) {
-    JavascriptExecutor jsExec = (JavascriptExecutor) YandexMailBoxTest.WEB_DRIVER;
+    JavascriptExecutor jsExec = (JavascriptExecutor) BaseTest.getDriver();
     jsExec.executeScript("document.querySelector(\"" + css + "\").click()");
   }
 
   public void actionMoveToElementAndClickAndSendKeys(WebElement webElement, String text) {
-    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(webElement).click().sendKeys(text).build().perform();
+    new Actions(BaseTest.getDriver()).moveToElement(webElement).click().sendKeys(text).build().perform();
   }
 
   public void actionMoveToElementAndClick(WebElement webElement) {
-    new Actions(YandexMailBoxTest.WEB_DRIVER).moveToElement(webElement).click().build().perform();
+    new Actions(BaseTest.getDriver()).moveToElement(webElement).click().build().perform();
+  }
+
+  public void addExplicitWaiterToBeClickable(WebElement webElement) {
+    WebDriverWait wait = new WebDriverWait(BaseTest.getDriver(), 10);
+    wait.until(ExpectedConditions.elementToBeClickable(webElement));
   }
 }
