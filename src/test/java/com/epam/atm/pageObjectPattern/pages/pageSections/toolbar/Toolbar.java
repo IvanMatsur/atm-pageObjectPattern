@@ -41,6 +41,7 @@ public class Toolbar extends Page {
 
   public void selectAllEmails() {
     System.out.println("Checked off checkbox to select all present emails");
+    addExplicitWaiterToBeClickable(selectAllCheckbox);
     addJSBorderColorToElement(selectAllCheckbox);
     selectAllCheckbox.click();
   }
