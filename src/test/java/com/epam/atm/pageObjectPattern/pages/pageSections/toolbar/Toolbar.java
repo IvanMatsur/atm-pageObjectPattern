@@ -40,16 +40,17 @@ public class Toolbar extends Page {
   }
 
   public void selectAllEmails() {
-    System.out.println("Checked off checkbox to select all present emails");
     addExplicitWaiterToBeClickable(selectAllCheckbox);
     addJSBorderColorToElement(selectAllCheckbox);
     selectAllCheckbox.click();
+    System.out.println("Checked off checkbox to select all present emails");
   }
 
   public void deleteSelectedEmails() {
-    System.out.println("Clicked button to delete all selected emails");
+    addExplicitWaiterToBeClickable(deleteSelected);
     addJSBorderColorToElement(deleteSelected);
     deleteSelected.click();
+    System.out.println("Clicked button to delete all selected emails");
   }
 
   public void selectAndDeleteAllEmails() {
