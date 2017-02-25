@@ -27,15 +27,6 @@ public abstract class BaseTest {
 
   @BeforeClass()
   public void doPreparationForTests() {
-    /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-    capabilities.setPlatform(Platform.WINDOWS);
-    
-    try {
-      WEB_DRIVER = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
-    }*/
-
     getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     getDriver().manage().window().maximize();
   }

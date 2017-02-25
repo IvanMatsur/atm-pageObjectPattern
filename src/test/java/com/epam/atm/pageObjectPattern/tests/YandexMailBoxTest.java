@@ -26,8 +26,8 @@ public class YandexMailBoxTest extends BaseTest {
 
   @AfterClass
   public void doPreparationForNextLaunch() {
-    if (getDriver().getCurrentUrl().equals(URL)) {
-      new LoginPage().openLoginPage(URL).doLogin(user.getUsername(), user.getPassword());
+    if (BaseTest.getDriver().getCurrentUrl().equals(URL)) {
+      new LoginPage().openLoginPage(URL).doLogin(user);
     }
 
     MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openAndCleanFolder(Folder.Type.SENT);
@@ -36,7 +36,7 @@ public class YandexMailBoxTest extends BaseTest {
 
     mailBoxPage.getLogoutPopup().doLogout();
 
-    getDriver().quit();
+    BaseTest.getDriver().quit();
   }
 
   @Test(description = "Check that login is successful", groups = "login")
@@ -49,20 +49,20 @@ public class YandexMailBoxTest extends BaseTest {
   @Test(description = "Check that new email can be created and saved as draft", groups = "creation", dependsOnMethods = "loginToMailBox")
   public void createEmailDraft() {
     innerPageService.createNewEmail(email);
-    innerPageService.saveEmailAsDraft(email);
+    innerPageService.saveEmailAsDraft();
     innerPageService.checkIsEmailSavedAsDraft();
   }
 
   @Test(description = "Check content of the sent email", groups = "content", dependsOnMethods = "createEmailDraft")
   public void checkDraftContent() {
-    innerPageService.openEmailSavedAsDraft(email);
+    innerPageService.openEmailSavedAsDraft();
     innerPageService.checkDraftFields(email);
   }
 
   @Test(description = "Check that draft can be sent", groups = "send", dependsOnMethods = "checkDraftContent")
   public void sendDraft() {
-    innerPageService.sendDraftEmail(email);
-    innerPageService.checkIsDraftSent(email);
+    innerPageService.sendDraftEmail();
+    innerPageService.checkIsDraftSent();
   }
 
   @Test(description = "Check that Draft folder is empty", groups = "send", dependsOnGroups = "content", dependsOnMethods = "sendDraft")

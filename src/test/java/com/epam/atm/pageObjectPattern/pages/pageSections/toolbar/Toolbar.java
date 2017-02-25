@@ -4,7 +4,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.epam.atm.pageObjectPattern.models.Email;
 import com.epam.atm.pageObjectPattern.pages.EmailPage;
 import com.epam.atm.pageObjectPattern.pages.Page;
 import com.epam.atm.pageObjectPattern.tests.BaseTest;
@@ -32,11 +31,11 @@ public class Toolbar extends Page {
     PageFactory.initElements(BaseTest.getDriver(), this);
   }
 
-  public EmailPage writeNewEmail(Email email) {
+  public EmailPage writeNewEmail() {
     addJSBorderColorToElement(newEmail);
     newEmail.click();
     System.out.println("Clicked button to create a new email");
-    return new EmailPage(email);
+    return new EmailPage();
   }
 
   public void selectAllEmails() {

@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.epam.atm.pageObjectPattern.models.Email;
 import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
@@ -12,11 +11,8 @@ import com.epam.atm.pageObjectPattern.tests.BaseTest;
  */
 public class EmailPage extends InnerPage {
 
-  private Email email;
-
-  public EmailPage(Email email) {
+  public EmailPage() {
     super();
-    this.email = email;
   }
 
   private final String NEW_EMAIL_TO_FIELD_XPATH = "//div[@name='to']";
@@ -26,6 +22,14 @@ public class EmailPage extends InnerPage {
   private final String SAVE_BUTTON_XPATH = "//button[@data-action='save']";
   private final String SUBMIT_BUTTON_XPATH = "//button[contains(@title, '(Ctrl + Enter')]";
   private final String REDIRECT_LINK_XPATH = "//a[@class='mail-Done-Redirect-Link' and @href='#inbox']";
+
+  private String getDraftEmailMailToXPath(String emailTo) {
+    return "//span[@data-contact-email='" + emailTo + "']";
+  }
+
+  private String getDraftEmailSubjectXPath(String emailSubject) {
+    return "//input[@name='subj' and @value='" + emailSubject + "']";
+  }
 
   @FindBy(xpath = NEW_EMAIL_TO_FIELD_XPATH)
   private WebElement newEmailToField;
@@ -50,38 +54,38 @@ public class EmailPage extends InnerPage {
 
   public void fillEmailTo(String emailTo) {
     addJSBorderColorToElement(newEmailToField);
-    newEmailToField.sendKeys(email.getMailTo());
+    newEmailToField.sendKeys(emailTo);
     System.out.println("Filled email \"To\" field");
   }
 
   public void fillSubject(String emailSubject) {
     addJSBorderColorToElement(newEmailSubjectField);
-    newEmailSubjectField.sendKeys(email.getMailSubject());
+    newEmailSubjectField.sendKeys(emailSubject);
     System.out.println("Filled email \"Subject\" field");
   }
 
   public void fillEmailBody(String emailBody) {
     addJSBorderColorToElement(newEmailBodyArea);
-    actionMoveToElementAndClickAndSendKeys(newEmailBodyArea, email.getMailBody());
+    actionMoveToElementAndClickAndSendKeys(newEmailBodyArea, emailBody);
     System.out.println("Filled email \"Body\" text area");
   }
 
-  public void fillAllEmailFields() {
-    fillEmailTo(email.getMailTo());
-    fillSubject(email.getMailSubject());
-    fillEmailBody(email.getMailBody());
+  public void fillAllEmailFields(String emailTo, String emailSubject, String emailBody) {
+    fillEmailTo(emailTo);
+    fillSubject(emailSubject);
+    fillEmailBody(emailBody);
   }
 
-  public boolean isDraftEmailContactProper() {
+  public boolean isDraftEmailContactProper(String emailTo) {
     WebElement draftEmailContact = BaseTest.getDriver().findElement(
-      By.xpath("//span[@data-contact-email='" + email.getMailTo() + "']"));
+      By.xpath(getDraftEmailMailToXPath(emailTo)));
     addJSBorderColorToElement(draftEmailContact);
     return isElementPresent(draftEmailContact, "Correct draft contact is present");
   }
 
-  public boolean isDraftEmailSubjectProper() {
+  public boolean isDraftEmailSubjectProper(String emailSubject) {
     WebElement draftEmailSubject = BaseTest.getDriver().findElement(
-      By.xpath("//input[@name='subj' and @value='" + email.getMailSubject() + "']"));
+      By.xpath(getDraftEmailSubjectXPath(emailSubject)));
     addJSBorderColorToElement(draftEmailSubject);
     return isElementPresent(draftEmailSubject, "Correct draft subject is present");
   }
@@ -108,4 +112,6 @@ public class EmailPage extends InnerPage {
     addJSBorderColorToElement(redirectLink);
     return isElementPresent(redirectLink, "Email has been sent");
   }
+
+
 }

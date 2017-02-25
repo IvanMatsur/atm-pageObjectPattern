@@ -3,6 +3,7 @@ package com.epam.atm.pageObjectPattern.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.epam.atm.pageObjectPattern.models.User;
 import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
@@ -33,12 +34,12 @@ public class LoginPage extends Page {
     return this;
   }
 
-  public MailBoxPage doLogin(String username, String password) {
+  public MailBoxPage doLogin(User user) {
     addJSBorderColorToElement(usernameField);
-    usernameField.sendKeys(username);
+    usernameField.sendKeys(user.getUsername());
 
     addJSBorderColorToElement(passwordField);
-    passwordField.sendKeys(password);
+    passwordField.sendKeys(user.getPassword());
 
     addJSBorderColorToElement(loginButton);
     loginButton.click();

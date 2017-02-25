@@ -13,61 +13,74 @@ import com.epam.atm.pageObjectPattern.tests.BaseTest;
  */
 public class InnerPageService {
 
+  private MailBoxPage mailBoxPage;
+  private EmailPage emailPage;
+
   public void checkIsLoginSuccessful(User user) {
-    Assert.assertEquals(new MailBoxPage().getEmailAddress(), user.getEmailAddress(), "Login failed");
+    mailBoxPage = new MailBoxPage();
+    Assert.assertEquals(mailBoxPage.getEmailAddress(), user.getEmailAddress(), "Login failed");
   }
 
   public void createNewEmail(Email email) {
-    EmailPage emailPage = new MailBoxPage().getToolbar().writeNewEmail(email);
-    emailPage.fillAllEmailFields();
+    emailPage = new MailBoxPage().getToolbar().writeNewEmail();
+    emailPage.fillAllEmailFields(email.getMailTo(), email.getMailSubject(), email.getMailBody());
   }
 
-  public void saveEmailAsDraft(Email email) {
-    EmailPage emailPage = new EmailPage(email);
-    MailBoxPage mailBoxPage = emailPage.getFoldersSection().openDraftFolder();
+  public void saveEmailAsDraft() {
+    emailPage = new EmailPage();
+    emailPage.getFoldersSection().openDraftFolder();
     emailPage.clickPopUpSaveButton();
   }
 
   public void checkIsEmailSavedAsDraft() {
+    mailBoxPage = new MailBoxPage();
     Assert.assertTrue(
-      new MailBoxPage().isFirstEmailInFolderPresent(),
+      mailBoxPage.isFirstEmailInFolderPresent(),
       "New email creation and saving as a draft failed");
   }
 
-  public void openEmailSavedAsDraft(Email email) {
-    new MailBoxPage().getFoldersSection().openDraftFolder().openFirstEmail(email);
+  public void openEmailSavedAsDraft() {
+    mailBoxPage = new MailBoxPage().getFoldersSection().openDraftFolder();
+    mailBoxPage.openFirstEmail();
   }
 
   public void checkDraftFields(Email email) {
-    EmailPage emailPage = new EmailPage(email);
-    Assert.assertTrue(emailPage.isDraftEmailContactProper(), "Address of the saved draft is incorrect");
-    Assert.assertTrue(emailPage.isDraftEmailSubjectProper(), "Subject of the saved draft is incorrect");
+    emailPage = new EmailPage();
+    Assert.assertTrue(
+      emailPage.isDraftEmailContactProper(email.getMailTo()),
+      "Address of the saved draft is incorrect");
+    Assert.assertTrue(
+      emailPage.isDraftEmailSubjectProper(email.getMailSubject()),
+      "Subject of the saved draft is incorrect");
     Assert.assertEquals(
       emailPage.getDraftEmailBody(),
       email.getMailBody(),
       "Body of the saved draft is incorrect");
   }
 
-  public void sendDraftEmail(Email email) {
-    new MailBoxPage().getFoldersSection().openDraftFolder().openFirstEmail(email);
+  public void sendDraftEmail() {
+    mailBoxPage = new MailBoxPage().getFoldersSection().openDraftFolder();
+    mailBoxPage.openFirstEmail();
   }
 
-  public void checkIsDraftSent(Email email) {
-    Assert.assertTrue(new EmailPage(email).sendEmail(), "Sending draft email failed");
+  public void checkIsDraftSent() {
+    emailPage = new EmailPage();
+    Assert.assertTrue(emailPage.sendEmail(), "Sending draft email failed");
   }
 
   public void checkIsDraftFolderEmpty() {
-    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openDraftFolder();
+    mailBoxPage = new MailBoxPage().getFoldersSection().openDraftFolder();
     Assert.assertTrue(mailBoxPage.isNoEmailsLinkPresent(), "Draft folder is NOT empty");
   }
 
   public void checkIsNotSentFolderEmpty() {
-    MailBoxPage mailBoxPage = new MailBoxPage().getFoldersSection().openSentFolder();
+    mailBoxPage = new MailBoxPage().getFoldersSection().openSentFolder();
     Assert.assertTrue(mailBoxPage.isFirstEmailInFolderPresent(), "Sent email is NOT in Sent folder");
   }
 
   public void logout() {
-    new MailBoxPage().getLogoutPopup().doLogout();
+    mailBoxPage = new MailBoxPage();
+    mailBoxPage.getLogoutPopup().doLogout();
   }
 
   public void checkIsLogoutSuccessful(String url) {
