@@ -3,6 +3,8 @@ package com.epam.atm.pageObjectPattern.tests;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
+import com.epam.atm.pageObjectPattern.core.Driver;
+import com.epam.atm.pageObjectPattern.factories.ModelsFactory;
 import com.epam.atm.pageObjectPattern.models.Email;
 import com.epam.atm.pageObjectPattern.models.User;
 import com.epam.atm.pageObjectPattern.pages.LoginPage;
@@ -18,15 +20,15 @@ public class YandexMailBoxTest extends BaseTest {
 
   public final static String URL = "https://www.yandex.by/";
 
-  private User user = new User("TestJohnSmith", "123456Password", "TestJohnSmith@yandex.ru");
-  private Email email = new Email("test@test.by", "Test", "Hello World!");
+  private User user = ModelsFactory.createJohnSmith();
+  private Email email = ModelsFactory.createTestEmail();
 
   private OuterPageService outerPageService = new OuterPageService();
   private InnerPageService innerPageService = new InnerPageService();
 
   @AfterClass
   public void doPreparationForNextLaunch() {
-    if (BaseTest.getDriver().getCurrentUrl().equals(URL)) {
+    if (Driver.getDriver().getCurrentUrl().equals(URL)) {
       new LoginPage().openLoginPage(URL).doLogin(user);
     }
 
@@ -36,7 +38,7 @@ public class YandexMailBoxTest extends BaseTest {
 
     mailBoxPage.getLogoutPopup().doLogout();
 
-    BaseTest.getDriver().quit();
+    Driver.getDriver().quit();
   }
 
   @Test(description = "Check that login is successful", groups = "login")

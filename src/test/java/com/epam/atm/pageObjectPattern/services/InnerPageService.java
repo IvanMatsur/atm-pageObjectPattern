@@ -2,11 +2,11 @@ package com.epam.atm.pageObjectPattern.services;
 
 import org.testng.Assert;
 
+import com.epam.atm.pageObjectPattern.core.Driver;
 import com.epam.atm.pageObjectPattern.models.Email;
 import com.epam.atm.pageObjectPattern.models.User;
 import com.epam.atm.pageObjectPattern.pages.EmailPage;
 import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
-import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
  * Created by Ivan_Matsur on 2/16/2017.
@@ -84,6 +84,6 @@ public class InnerPageService {
   }
 
   public void checkIsLogoutSuccessful(String url) {
-    Assert.assertEquals(BaseTest.getDriver().getCurrentUrl(), url, "Logout failed");
+    Assert.assertEquals(Driver.getDriver().getCurrentUrl(), url, "Logout failed");
   }
 }

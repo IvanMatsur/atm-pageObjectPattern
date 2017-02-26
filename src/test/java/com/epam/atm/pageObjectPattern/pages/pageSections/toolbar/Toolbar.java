@@ -2,11 +2,10 @@ package com.epam.atm.pageObjectPattern.pages.pageSections.toolbar;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
+import com.epam.atm.pageObjectPattern.core.Element;
 import com.epam.atm.pageObjectPattern.pages.EmailPage;
 import com.epam.atm.pageObjectPattern.pages.Page;
-import com.epam.atm.pageObjectPattern.tests.BaseTest;
 
 /**
  * Created by Ivan_Matsur on 2/2/2017.
@@ -28,27 +27,22 @@ public class Toolbar extends Page {
   private WebElement deleteSelected;
 
   public Toolbar() {
-    PageFactory.initElements(BaseTest.getDriver(), this);
+    super();
   }
 
   public EmailPage writeNewEmail() {
-    addJSBorderColorToElement(newEmail);
-    newEmail.click();
+    new Element(newEmail).click();
     System.out.println("Clicked button to create a new email");
     return new EmailPage();
   }
 
   public void selectAllEmails() {
-    addExplicitWaiterToBeClickable(selectAllCheckbox);
-    addJSBorderColorToElement(selectAllCheckbox);
-    selectAllCheckbox.click();
+    new Element(selectAllCheckbox).click();
     System.out.println("Checked off checkbox to select all present emails");
   }
 
   public void deleteSelectedEmails() {
-    addExplicitWaiterToBeClickable(deleteSelected);
-    addJSBorderColorToElement(deleteSelected);
-    deleteSelected.click();
+    new Element(deleteSelected).click();
     System.out.println("Clicked button to delete all selected emails");
   }
 

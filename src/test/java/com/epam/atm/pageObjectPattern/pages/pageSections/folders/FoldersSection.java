@@ -62,20 +62,20 @@ public class FoldersSection {
   public MailBoxPage openAndCleanFolder(Folder.Type type) {
     Folder folder = null;
     switch (type) {
-      case INBOX:
-        folder = inboxFolder;
-        break;
-      case SENT:
-        folder = sentFolder;
-        break;
-      case TRASH:
-        folder = trashFolder;
-        break;
-      case SPAM:
-        folder = spamFolder;
-        break;
-      case DRAFT:
-        folder = draftFolder;
+    case INBOX:
+      folder = inboxFolder;
+      break;
+    case SENT:
+      folder = sentFolder;
+      break;
+    case TRASH:
+      folder = trashFolder;
+      break;
+    case SPAM:
+      folder = spamFolder;
+      break;
+    case DRAFT:
+      folder = draftFolder;
     }
     MailBoxPage mailBoxPage = folder.open();
 

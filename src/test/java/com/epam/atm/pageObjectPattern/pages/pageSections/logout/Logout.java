@@ -3,6 +3,7 @@ package com.epam.atm.pageObjectPattern.pages.pageSections.logout;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.epam.atm.pageObjectPattern.core.Element;
 import com.epam.atm.pageObjectPattern.pages.LoginPage;
 import com.epam.atm.pageObjectPattern.pages.Page;
 
@@ -21,9 +22,9 @@ public class Logout extends Page {
   }
 
   public LoginPage doLogout() {
-    if (isElementPresent(logoutButton)) {
-      addJSBorderColorToElement(logoutButton);
-      logoutButton.click();
+    Element element = new Element(logoutButton);
+    if (isElementPresent(element)) {
+      element.click();
       System.out.println("Clicked button to log out");
     }
     return new LoginPage();

@@ -3,6 +3,7 @@ package com.epam.atm.pageObjectPattern.pages.pageSections.folders;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.epam.atm.pageObjectPattern.core.Element;
 import com.epam.atm.pageObjectPattern.pages.MailBoxPage;
 import com.epam.atm.pageObjectPattern.pages.Page;
 
@@ -78,9 +79,7 @@ public class Folder extends Page {
       folder = draftFolder;
     }
 
-    addExplicitWaiterToBeClickable(folder);
-    addJSBorderColorToElement(folder);
-    folder.click();
+    new Element(folder).click();
     System.out.println("Opened " + type.toString() + " folder");
     return new MailBoxPage();
   }
@@ -104,8 +103,7 @@ public class Folder extends Page {
       emailsNumberInFolder = emailsNumberInDraft;
     }
 
-    addJSBorderColorToElement(emailsNumberInFolder);
-    String emailsInFolder = emailsNumberInFolder.getText();
+    String emailsInFolder = new Element(emailsNumberInFolder).getText();
     System.out.println("Got emails number in the " + type.toString() + " folder");
     return emailsInFolder;
   }

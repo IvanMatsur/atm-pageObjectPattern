@@ -2,12 +2,12 @@ package com.epam.atm.pageObjectPattern.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
+import com.epam.atm.pageObjectPattern.core.Element;
 import com.epam.atm.pageObjectPattern.pages.pageSections.folders.FoldersSection;
 import com.epam.atm.pageObjectPattern.pages.pageSections.logout.Logout;
 import com.epam.atm.pageObjectPattern.pages.pageSections.toolbar.Toolbar;
-import com.epam.atm.pageObjectPattern.tests.BaseTest;
+import com.epam.atm.pageObjectPattern.utils.JS;
 
 /**
  * Created by Ivan_Matsur on 2/4/2017.
@@ -26,7 +26,6 @@ public class InnerPage extends Page {
     super();
     this.foldersSection = new FoldersSection();
     this.toolbar = new Toolbar();
-    PageFactory.initElements(BaseTest.getDriver(), this);
   }
 
   public FoldersSection getFoldersSection() {
@@ -42,14 +41,14 @@ public class InnerPage extends Page {
   }
 
   public String getEmailAddress() {
-    String userEmailAddress = emailAddress.getText();
+    String userEmailAddress = new Element(emailAddress).getText();
     System.out.println("Got email address: " + userEmailAddress);
     return userEmailAddress;
   }
 
   public Logout getLogoutPopup() {
-    addJSBorderColorToElement(emailAddress);
-    addJSClickerByQuerySelector(EMAIL_ADDRESS_CSS);
+    JS.addJSBorderColorToElement(emailAddress);
+    JS.addJSClickerByQuerySelector(EMAIL_ADDRESS_CSS);
     System.out.println("Opened popup with Logout button");
     return new Logout();
   }

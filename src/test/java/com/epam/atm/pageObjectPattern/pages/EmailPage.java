@@ -4,7 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.epam.atm.pageObjectPattern.tests.BaseTest;
+import com.epam.atm.pageObjectPattern.core.Driver;
+import com.epam.atm.pageObjectPattern.core.Element;
+import com.epam.atm.pageObjectPattern.utils.Action;
+import com.epam.atm.pageObjectPattern.utils.JS;
 
 /**
  * Created by Ivan_Matsur on 2/2/2017.
@@ -53,20 +56,18 @@ public class EmailPage extends InnerPage {
   private WebElement redirectLink;
 
   public void fillEmailTo(String emailTo) {
-    addJSBorderColorToElement(newEmailToField);
-    newEmailToField.sendKeys(emailTo);
+    new Element(newEmailToField).sendKeys(emailTo);
     System.out.println("Filled email \"To\" field");
   }
 
   public void fillSubject(String emailSubject) {
-    addJSBorderColorToElement(newEmailSubjectField);
-    newEmailSubjectField.sendKeys(emailSubject);
+    new Element(newEmailSubjectField).sendKeys(emailSubject);
     System.out.println("Filled email \"Subject\" field");
   }
 
   public void fillEmailBody(String emailBody) {
-    addJSBorderColorToElement(newEmailBodyArea);
-    actionMoveToElementAndClickAndSendKeys(newEmailBodyArea, emailBody);
+    JS.addJSBorderColorToElement(newEmailBodyArea);
+    Action.moveToElementAndClickAndSendKeys(newEmailBodyArea, emailBody);
     System.out.println("Filled email \"Body\" text area");
   }
 
@@ -77,41 +78,33 @@ public class EmailPage extends InnerPage {
   }
 
   public boolean isDraftEmailContactProper(String emailTo) {
-    WebElement draftEmailContact = BaseTest.getDriver().findElement(
-      By.xpath(getDraftEmailMailToXPath(emailTo)));
-    addJSBorderColorToElement(draftEmailContact);
+    Element draftEmailContact = new Element(Driver.getDriver().findElement(
+        By.xpath(getDraftEmailMailToXPath(emailTo))));
     return isElementPresent(draftEmailContact, "Correct draft contact is present");
   }
 
   public boolean isDraftEmailSubjectProper(String emailSubject) {
-    WebElement draftEmailSubject = BaseTest.getDriver().findElement(
-      By.xpath(getDraftEmailSubjectXPath(emailSubject)));
-    addJSBorderColorToElement(draftEmailSubject);
+    Element draftEmailSubject = new Element(Driver.getDriver().findElement(
+        By.xpath(getDraftEmailSubjectXPath(emailSubject))));
     return isElementPresent(draftEmailSubject, "Correct draft subject is present");
   }
 
   public String getDraftEmailBody() {
-    addJSBorderColorToElement(draftEmailBody);
-    String result = draftEmailBody.getText();
+    String result = new Element(draftEmailBody).getText();
     System.out.println("Got draft body text");
     return result;
   }
 
   public EmailPage clickPopUpSaveButton() {
-    addJSBorderColorToElement(saveButton);
-    saveButton.click();
+    new Element(saveButton).click();
     System.out.println("Clicked \"Save\" button to save new email as a draft");
     return this;
   }
 
   public boolean sendEmail() {
-    addJSBorderColorToElement(submitEmailButton);
-    actionMoveToElementAndClick(submitEmailButton);
+    JS.addJSBorderColorToElement(submitEmailButton);
+    Action.moveToElementAndClick(submitEmailButton);
     System.out.println("Clicked \"Submit\" button to send the email");
-
-    addJSBorderColorToElement(redirectLink);
-    return isElementPresent(redirectLink, "Email has been sent");
+    return isElementPresent(new Element(redirectLink), "Email has been sent");
   }
-
-
 }
